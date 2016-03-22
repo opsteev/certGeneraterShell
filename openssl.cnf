@@ -1,0 +1,100 @@
+[ ca ]
+default_ca	= CA_default
+[ CA_default ]
+dir		    = ./		
+new_certs_dir	= $dir/
+database	= $dir/index.txt
+serial		= $dir/serial
+RANDFILE	= $dir/.rand
+x509_extensions	= usr_cert
+name_opt 	= ca_default
+cert_opt 	= ca_default
+default_days	= 3650
+default_crl_days = 30
+default_md	= sha1
+policy		= policy_match
+[ policy_match ]
+countryName		= match
+stateOrProvinceName	= match
+organizationName	= match
+organizationalUnitName	= optional
+commonName		= supplied
+emailAddress		= optional
+[ policy_anything ]
+countryName		= optional
+stateOrProvinceName	= optional
+localityName		= optional
+organizationName	= optional
+organizationalUnitName	= optional
+commonName		= supplied
+emailAddress		= optional
+[ req ]
+default_bits		= 2048
+default_md          = sha1
+default_keyfile 	= privkey.pem
+distinguished_name	= req_distinguished_name
+x509_extensions	    = v3_ca
+
+input_password = whatever
+output_password = whatever
+
+string_mask = nombstr
+
+[ req_distinguished_name ]
+countryName			= Country Name (2 letter code)
+countryName_default		= CN
+countryName_min			= 2
+countryName_max			= 2
+stateOrProvinceName		= State or Province Name (full name)
+stateOrProvinceName_default	= Beijing
+localityName			= Locality Name (eg, city)
+0.organizationName		= Organization Name (eg, company)
+0.organizationName_default	= Aruba Networks
+1.organizationName		= Second Organization Name (eg, company)
+1.organizationName_default	= an HP company
+organizationalUnitName		= Organizational Unit Name (eg, section)
+organizationalUnitName_default	= Aruba Instant
+commonName			= Common Name (eg, YOUR name)
+commonName_default  = Feng Ding
+commonName_max			= 64
+emailAddress			= Email Address
+emailAddress            = fding@arubanetworks.com
+emailAddress_max		= 64
+
+[ usr_cert ]
+basicConstraints=CA:FALSE
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
+[ ssl_server ]
+basicConstraints        = CA:FALSE
+nsCertType              = server
+keyUsage                = digitalSignature, keyEncipherment
+extendedKeyUsage        = serverAuth, nsSGC, msSGC
+nsComment               = "OpenSSL Certificate for SSL Web Server"
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+subjectAltName=email:copy,email:fding@arubanetworks.com,URI:http://www.automation-testbed.com/
+1.2.3.4.5=DER:0102030405
+
+[ ssl_client ]
+basicConstraints        = CA:FALSE
+nsCertType              = client
+keyUsage                = digitalSignature, keyEncipherment
+extendedKeyUsage        = clientAuth
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+subjectAltName=email:copy,email:fding@arubanetworks.com
+1.2.3.4.5=DER:0102030405
+nsComment               = "OpenSSL Certificate for SSL Client"
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+[ v3_ca ]
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer:always
+basicConstraints = CA:true
+keyUsage = cRLSign, keyCertSign
+
+
